@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
 
-class CoreConfig(AppConfig):
-    name = 'core'
+class KhanatekCoreAppConfig(AppConfig):
+    name = 'khanatek.core'
+    label = 'khanatek'
+    verbose_name = "khanatek"

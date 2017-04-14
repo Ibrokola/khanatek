@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.utils.functional import cached_property
 from django.views.decorators.vary import vary_on_headers
 
-from modelcluster.fields import ParentalKey
+from modelcluster.fields import ParentalKey, ForeignKey
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
                                                 MultiFieldPanel,
@@ -33,6 +33,7 @@ from wagtail.wagtailimages.models import (AbstractImage, AbstractRendition,
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtailmarkdown.fields import MarkdownBlock
+from .apps import KhanatekCoreAppConfig
 
 
 
@@ -186,9 +187,102 @@ class ContactFields(models.Model):
     class Meta:
         abstract = True
 
+# Related links
+class RelatedLink(LinkFields):
+    title = models.CharField(max_length=255, help_text="Link title")
+
+    panels = [
+        FieldPanel('title'),
+        MultiFieldPanel(LinkFields.panels, "Link"),
+    ]
+
+    class Meta:
+        abstract = True
 
 
+# Home Page
+
+class HomePageHero(Orderable, RelatedLink):
+    page = ParentalKey('core.HomePage', related_name='hero')
+    colour = models.CharField(max_length=255)
+    background = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    logo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    text = models.CharField(
+        max_length=255
+    )
+
+    panels = RelatedLink.panels + [
+        ImageChooserPanel('background'),
+        ImageChooserPanel('logo'),
+        FieldPanel('colour'),
+        FieldPanel('text'),
+    ]
+
+
+class HomePageClient(Orderable, RelatedLink):
+    page = ParentalKey('core.HomePage', related_name='clients')
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = RelatedLink.panels + [
+        ImageChooserPanel('image')
+    ]
 
 
 class HomePage(Page):
-    pass
+    hero_intro_primary = models.TextField(blank=True)
+    hero_intro_secondary = models.TextField(blank=True)
+    intro_body = RichTextField(blank=True)
+    work_title = models.TextField(blank=True)
+    project_title = models.TextField(blank=True)
+    clients_title = models.TextField(blank=True)
+    search_fields = Page.search_fields + [
+    	index.SearchField('intro_body'),
+    ]
+
+    class Meta:
+        verbose_name = "Homepage"
+
+HomePage.content_panels = [
+        FieldPanel('title', classname="full title"),
+        MultiFieldPanel(
+            [
+                FieldPanel('hero_intro_primary'),
+                FieldPanel('hero_intro_secondary'),
+            ],
+            heading="Hero intro"
+        ),
+        InlinePanel('hero', label="Hero"),
+        FieldPanel('intro_body'),
+        FieldPanel('work_title'),
+        FieldPanel('project_title'),
+        FieldPanel('clients_title'),
+        InlinePanel('clients', label="Clients"),
+    ]
+
+    # @property
+    # def blog_posts(self):
+    #     # Get list of blog pages.
+    #     blog_posts = BlogPage.objects.live().public()
+
+    #     # Order by most recent date first
+    #     blog_posts = blog_posts.order_by('-date')
+
+    #     return blog_posts
