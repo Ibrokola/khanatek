@@ -33,6 +33,7 @@ from wagtail.wagtailimages.models import (AbstractImage, AbstractRendition,
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtailmarkdown.fields import MarkdownBlock
+from .apps import KhanatekCoreAppConfig
 
 
 
