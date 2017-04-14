@@ -335,7 +335,7 @@ class StandardPage(Page):
     intro = StreamField(StoryBlock())
     middle_break = RichTextField(blank=True)
     body = StreamField(StoryBlock())
-    streamfield = StreamField(StoryBlock())
+    # streamfield = StreamField(StoryBlock())
     email = models.EmailField(blank=True)
 
     feed_image = models.ForeignKey(
@@ -362,7 +362,7 @@ class StandardPage(Page):
         StreamFieldPanel('intro'),
         FieldPanel('middle_break', classname="full"),
         StreamFieldPanel('body'),
-        StreamFieldPanel('streamfield'),
+        # StreamFieldPanel('streamfield'),
         FieldPanel('email', classname="full"),
         InlinePanel('content_block', label="Content block"),
         InlinePanel('related_links', label="Related links"),
@@ -1437,6 +1437,10 @@ class Contact(AbstractEmailForm):
 
 @register_setting
 class GlobalSettings(BaseSetting):
+
+    contact_telephone = models.CharField(max_length=255, help_text='Telephone', null=True,)
+    contact_email = models.EmailField(max_length=255, help_text='Email address', null=True)
+    contact_twitter = models.CharField(max_length=255, help_text='Twitter', null=True)
 
 	# Contact widget
     contact_person = models.ForeignKey(
