@@ -286,3 +286,85 @@ HomePage.content_panels = [
     #     blog_posts = blog_posts.order_by('-date')
 
     #     return blog_posts
+
+
+# Standard page
+
+class StandardPageContentBlock(Orderable, ContentBlock):
+    page = ParentalKey('core.StandardPage', related_name='content_block')
+
+
+class StandardPageRelatedLink(Orderable, RelatedLink):
+    page = ParentalKey('core.StandardPage', related_name='related_links')
+
+
+class StandardPageClient(Orderable, RelatedLink):
+    page = ParentalKey('core.StandardPage', related_name='clients')
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = RelatedLink.panels + [
+        ImageChooserPanel('image')
+    ]
+
+
+class StandardPage(Page):
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    credit = models.CharField(max_length=255, blank=True)
+    heading = RichTextField(blank=True)
+    quote = models.CharField(max_length=255, blank=True)
+    intro = StreamField(StoryBlock())
+    middle_break = RichTextField(blank=True)
+    body = StreamField(StoryBlock())
+    streamfield = StreamField(StoryBlock())
+    email = models.EmailField(blank=True)
+
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    show_in_play_menu = models.BooleanField(default=False)
+
+    search_fields = Page.search_fields + [
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    ]
+
+    content_panels = [
+        FieldPanel('title', classname="full title"),
+        ImageChooserPanel('main_image'),
+        FieldPanel('credit', classname="full"),
+        FieldPanel('heading', classname="full"),
+        FieldPanel('quote', classname="full"),
+        StreamFieldPanel('intro'),
+        FieldPanel('middle_break', classname="full"),
+        StreamFieldPanel('body'),
+        StreamFieldPanel('streamfield'),
+        FieldPanel('email', classname="full"),
+        InlinePanel('content_block', label="Content block"),
+        InlinePanel('related_links', label="Related links"),
+        InlinePanel('clients', label="Clients"),
+    ]
+
+    promote_panels = [
+        MultiFieldPanel(Page.promote_panels, "Common page configuration"),
+        FieldPanel('show_in_play_menu'),
+        ImageChooserPanel('feed_image'),
+    ]
+
+
