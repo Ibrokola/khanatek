@@ -41,3 +41,9 @@ if settings.DEBUG:
     # urlpatterns += [
     #     url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'torchbox.com/images/favicon.ico')),
     # ]
+    
+    # Add views for testing 404 and 500 templates
+    urlpatterns += [
+        url(r'^test404/$', TemplateView.as_view(template_name='404.html')),
+        url(r'^test500/$', TemplateView.as_view(template_name='500.html')),
+    ]

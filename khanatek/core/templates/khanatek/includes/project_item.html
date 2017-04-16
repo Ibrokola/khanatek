@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<li>
+    <div class="row">
+    
+        <div class="col-md-6 mb-r wow fadeInLeft" data-wow-delay="0.9s">
+            <!--Featured image-->
+            <a href="{% pageurl page %}">
+            <div class="view overlay hm-white-slight z-depth-2">
+                {% if image %}
+                    {% image image fill-540x360 as background %}
+                    <div class="image-container" style="background-image: url('{{ background.url }}');" ></div>
+                    <a>
+                        <div class="mask"></div>
+                    </a>
+                {% endif %}
+            </div>
+            </a>
+
+            <!--Excerpt-->
+            <div class="card-block">
+                        <h5 class="red-text"><i class="fa fa-hat"></i>Project</h5>
+                        <h3>{{ title }}</h3>
+                    <p class="post-into">{{ project.intro|richtext|truncatewords_html:11 }}</p>
+                <a class="btn btn-git" href="{% pageurl page %}"><i class="fa fa-clone left"></i> View project</a>
+            </div>
+        </div>
+    </div>
+</li>

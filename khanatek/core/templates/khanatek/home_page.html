@@ -1,0 +1,41 @@
+{% extends "khanatek/base.html" %}
+{% load khanatek_tags wagtailcore_tags wagtailimages_tags wagtailembeds_tags static %}
+{% block title_postfix %}{% endblock %}
+{% block content %}
+
+	{% include "khanatek/includes/hero.html" with hero=self.hero.all primary_title=self.hero_intro_primary secondary_title=self.hero_intro_secondary %}
+
+    <section class="section feature-box" id="best-features">
+        <div class="container">
+            <div class="section-description lead wow fadeIn" data-wow-delay="0.2s">
+                {{ self.intro_body|richtext }}
+            </div>
+        </div>
+    </section>
+    <section id="posts" class="container">
+        <h2 class="section-heading wow fadeInDown" data-wow-delay="0.4s">{{ self.article_title|safe }}</h2>
+        
+        		{% homepage_article_listing %}
+      
+    </section>
+    <section id="posts" class="container">
+        <h2 class="section-heading wow fadeIn" data-wow-delay="0.8s">{{ self.project_title|safe }}</h2>
+       
+         		{% homepage_project_listing %}
+       
+    </section>
+
+    <div class="container">
+        <section class="clients">
+            <h2>{{ self.clients_title|safe }}</h2>
+            	{% include "khanatek/includes/clients.html" with clients=self.clients.all %}
+        </section>
+    </div>
+
+    <section class="hiring">
+        <div class="container">
+            {% homepage_job_listing 0 %}
+        </div>
+    </section>
+
+{% endblock %}

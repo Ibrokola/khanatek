@@ -254,7 +254,7 @@ class HomePage(Page):
     hero_intro_primary = models.TextField(blank=True)
     hero_intro_secondary = models.TextField(blank=True)
     intro_body = RichTextField(blank=True)
-    work_title = models.TextField(blank=True)
+    article_title = models.TextField(blank=True)
     project_title = models.TextField(blank=True)
     clients_title = models.TextField(blank=True)
     search_fields = Page.search_fields + [
@@ -264,7 +264,8 @@ class HomePage(Page):
     class Meta:
         verbose_name = "Homepage"
 
-HomePage.content_panels = [
+# HomePage.content_panels
+    content_panels = [
         FieldPanel('title', classname="full title"),
         MultiFieldPanel(
             [
@@ -275,22 +276,23 @@ HomePage.content_panels = [
         ),
         InlinePanel('hero', label="Hero"),
         FieldPanel('intro_body'),
-        FieldPanel('work_title'),
+        FieldPanel('article_title'),
         FieldPanel('project_title'),
         FieldPanel('clients_title'),
         InlinePanel('clients', label="Clients"),
     ]
 
-    # @property
-    # def blog_posts(self):
-    #     # Get list of blog pages.
-    #     blog_posts = BlogPage.objects.live().public()
+    @property
+    def article_posts(self):
+        # Get list of article pages.
+        article_posts = ArticlePage.objects.live().public()
 
-    #     # Order by most recent date first
-    #     blog_posts = blog_posts.order_by('-date')
+        # Order by most recent date first
+        article_posts = article_posts.order_by('-date')
 
-    #     return blog_posts
+        return article_posts
 
+    
 
     			#####################
     			#####################
@@ -803,8 +805,14 @@ class ArticlePageAuthor(Orderable):
         PageChooserPanel('author'),
     ]
 
-
 class ArticlePage(Page):
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     intro = RichTextField("Intro", blank=True)
     body = StreamField(StoryBlock())
     colour = models.CharField(
@@ -854,6 +862,7 @@ class ArticlePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
+        ImageChooserPanel('main_image'),
         FieldPanel('colour'),
         InlinePanel('related_author', label="Author"),
         FieldPanel('date'),
