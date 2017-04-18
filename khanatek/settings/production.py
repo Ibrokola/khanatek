@@ -8,7 +8,7 @@ import dj_database_url
 import os
 
 
-# DEBUG = False
+DEBUG = False
 TEMPLATES[0]['OPTIONS']['debug'] = False
 
 
