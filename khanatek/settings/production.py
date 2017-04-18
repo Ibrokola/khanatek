@@ -2,6 +2,11 @@ from __future__ import absolute_import, unicode_literals
 
 from .base import *
 
+import os
+
+env = os.environ.copy()
+SECRET_KEY = env['SECRET_KEY']
+
 DEBUG = False
 TEMPLATES[0]['OPTIONS']['debug'] = False
 
@@ -19,3 +24,12 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_CSS_HASHING_METHOD = 'content'
