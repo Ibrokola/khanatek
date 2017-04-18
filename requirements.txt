@@ -43,7 +43,6 @@ wagtailmodeladmin==2.5.7
 webencodings==0.5.1
 whitenoise==3.3.0
 Willow==0.4
-gunicorn
 
 # Wagtail-markdown
 git+https://github.com/torchbox/wagtail-markdown.git@mediafix#egg=wagtail-markdown
