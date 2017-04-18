@@ -167,7 +167,7 @@ CACHES = {
 }
 
 # Serve /public directory with whitenoise
-WHITENOISE_ROOT = os.path.join(BASE_DIR, 'public')
+# WHITENOISE_ROOT = os.path.join(BASE_DIR, 'public')
 
 
 # Wagtail settings

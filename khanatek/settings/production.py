@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+from .dev import *
 from .base import *
 
 import dj_database_url
@@ -8,7 +9,7 @@ import os
 
 
 DEBUG = False
-# TEMPLATES[0]['OPTIONS']['debug'] = False
+TEMPLATES[0]['OPTIONS']['debug'] = False
 
 
 # Parse database configuration from $DATABASE_URL
@@ -21,7 +22,7 @@ DEBUG = False
 # Allow all host headers
 ALLOWED_HOSTS = ['ibrokola.herokuapp.com']
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 COMPRESS_OFFLINE = True
 COMPRESS_CSS_FILTERS = [
