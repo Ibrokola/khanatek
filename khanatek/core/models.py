@@ -254,7 +254,7 @@ class HomePage(Page):
     hero_intro_primary = models.TextField(blank=True)
     hero_intro_secondary = models.TextField(blank=True)
     intro_body = RichTextField(blank=True)
-    work_title = models.TextField(blank=True)
+    article_title = models.TextField(blank=True)
     project_title = models.TextField(blank=True)
     clients_title = models.TextField(blank=True)
     search_fields = Page.search_fields + [
@@ -264,7 +264,8 @@ class HomePage(Page):
     class Meta:
         verbose_name = "Homepage"
 
-HomePage.content_panels = [
+# HomePage.content_panels
+    content_panels = [
         FieldPanel('title', classname="full title"),
         MultiFieldPanel(
             [
@@ -275,22 +276,23 @@ HomePage.content_panels = [
         ),
         InlinePanel('hero', label="Hero"),
         FieldPanel('intro_body'),
-        FieldPanel('work_title'),
+        FieldPanel('article_title'),
         FieldPanel('project_title'),
         FieldPanel('clients_title'),
         InlinePanel('clients', label="Clients"),
     ]
 
-    # @property
-    # def blog_posts(self):
-    #     # Get list of blog pages.
-    #     blog_posts = BlogPage.objects.live().public()
+    @property
+    def article_posts(self):
+        # Get list of article pages.
+        article_posts = ArticlePage.objects.live().public()
 
-    #     # Order by most recent date first
-    #     blog_posts = blog_posts.order_by('-date')
+        # Order by most recent date first
+        article_posts = article_posts.order_by('-date')
 
-    #     return blog_posts
+        return article_posts
 
+    
 
     			#####################
     			#####################
@@ -743,7 +745,7 @@ class ArticleIndexPage(Page):
             article_posts = paginator.page(paginator.num_pages)
 
         if request.is_ajax():
-            return render(request, "khanatek/includes/article_listing.html", {
+            return render(request, "core/includes/article_listing.html", {
                 'self': self,
                 'article_posts': article_posts,
                 'per_page': per_page,
@@ -803,8 +805,14 @@ class ArticlePageAuthor(Orderable):
         PageChooserPanel('author'),
     ]
 
-
 class ArticlePage(Page):
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     intro = RichTextField("Intro", blank=True)
     body = StreamField(StoryBlock())
     colour = models.CharField(
@@ -854,6 +862,7 @@ class ArticlePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
+        ImageChooserPanel('main_image'),
         FieldPanel('colour'),
         InlinePanel('related_author', label="Author"),
         FieldPanel('date'),
@@ -929,7 +938,7 @@ class JobIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(
-            CareerIndexPage, self
+            JobIndexPage, self
         ).get_context(request, *args, **kwargs)
         context['jobs'] = self.job.all()
         context['articles'] = ArticlePage.objects.live().order_by('-date')[:4]
@@ -1214,9 +1223,9 @@ class PersonIndexPage(Page):
 class SignUpFormPageBullet(Orderable):
     page = ParentalKey('core.SignUpFormPage', related_name='bullet_points')
     icon = models.CharField(max_length=100, choices=(
-        ('khanatek/includes/svg/bulb-svg.html', 'Light bulb'),
-        ('khanatek/includes/svg/pro-svg.html', 'Chart'),
-        ('khanatek/includes/svg/tick-svg.html', 'Tick'),
+        ('core/includes/svg/bulb-svg.html', 'Light bulb'),
+        ('core/includes/svg/pro-svg.html', 'Chart'),
+        ('core/includes/svg/tick-svg.html', 'Tick'),
     ))
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -1282,7 +1291,7 @@ class SignUpFormPage(Page):
     formatted_title = models.CharField(
         max_length=255, blank=True,
         help_text="This is the title displayed on the page, not the document "
-        "title tag. HTML is permitted. Be careful."
+        "title tag. HTML is permitted (Remember Ibraheem)."
     )
     intro = RichTextField()
     call_to_action_text = models.CharField(
@@ -1351,7 +1360,7 @@ class SignUpFormPage(Page):
                 self.send_email_response(form.cleaned_data['email'])
                 return render(
                     request,
-                    'khanatek/includes/sign_up_form_page_landing.html',
+                    'core/includes/sign_up_form_page_landing.html',
                     {
                         'page': self,
                         'form': form,
@@ -1361,7 +1370,7 @@ class SignUpFormPage(Page):
             else:
                 return render(
                     request,
-                    'khanatek/includes/sign_up_form_page_form.html',
+                    'core/includes/sign_up_form_page_form.html',
                     {
                         'page': self,
                         'form': form,
@@ -1475,7 +1484,7 @@ class MenuItemBlock(StructBlock):
     subitems = SubMenuItemBlock()
 
     class Meta:
-        template = "khanatek/includes/menu_item.html"
+        template = "core/includes/menu_item.html"
 
 
 class MenuBlock(StreamBlock):

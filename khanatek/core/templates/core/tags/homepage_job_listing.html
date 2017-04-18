@@ -1,0 +1,37 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% if jobs %}
+<h2 style="display:block;">{{ jobintro }}</h2>
+
+<ul>
+{% for job in jobs %}
+<div class="row text-center">
+    <!--First column-->
+        <div class="col-lg-4 col-md-6 mb-r wow fadeInUp">
+        <!--Featured image-->
+            <a href="{{ job.url }}" class="listing">
+                <div class="view overlay hm-white-slight z-depth-2">
+                        <a>
+                            <div class="mask"></div>
+                        </a>
+                </div>
+            </a>
+            <!--Excerpt-->
+            <div class="card-block">
+                <h5 class="red-text"><i class="fa fa-hat"></i>Careers</h5>
+                <h3>{{ job.job_title }}</h3>
+                <p>{{ job.job_intro }}</p>
+                    <a class="btn btn-ins" href="{{ job.url }}"><i class="fa fa-clone left"></i> View opening</a>
+            </div>
+        </div>
+</div>
+{% endfor %}
+</ul>
+    {% if jobindex.no_jobs_that_fit %}
+    <div class="jobs-followon">
+        {{ jobindex.no_jobs_that_fit|richtext }}
+    </div>
+    {% endif %}
+
+</div>
+{% endif %}
