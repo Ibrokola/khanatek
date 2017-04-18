@@ -9,7 +9,7 @@ import os
 
 
 DEBUG = False
-TEMPLATES[0]['OPTIONS']['debug'] = False
+# TEMPLATES[0]['OPTIONS']['debug'] = False
 
 
 # Parse database configuration from $DATABASE_URL
