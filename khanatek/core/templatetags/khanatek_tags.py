@@ -35,14 +35,14 @@ def get_prev_sibling_by_order(page):
 
 
 @register.assignment_tag
-def get_next_sibling_blog(page):
+def get_next_sibling_article(page):
     sibling = ArticlePage.objects.filter(date__lt=page.date).order_by('-date').live().first()
     if sibling:
         return sibling.specific
 
 
 @register.assignment_tag
-def get_prev_sibling_blog(page):
+def get_prev_sibling_article(page):
     sibling = ArticlePage.objects.filter(date__gt=page.date).order_by('-date').live().last()
     if sibling:
         return sibling.specific
@@ -72,7 +72,7 @@ def main_menu():
 
 
 # Person feed for home page
-@register.inclusion_tag('khanatek/tags/homepage_people_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/homepage_people_listing.html', takes_context=True)
 def homepage_people_listing(context, count=3):
     people = play_filter(PersonPage.objects.filter(live=True).order_by('?'),
                          count)
@@ -84,7 +84,7 @@ def homepage_people_listing(context, count=3):
 
 
 # Article feed for home page
-@register.inclusion_tag('khanatek/tags/homepage_article_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/homepage_article_listing.html', takes_context=True)
 def homepage_article_listing(context, count=6):
     article_posts = play_filter(ArticlePage.objects.filter(live=True).order_by('-date'), count)
     return {
@@ -95,9 +95,9 @@ def homepage_article_listing(context, count=6):
 
 
 # Project feed for home page
-@register.inclusion_tag('khanatek/tags/homepage_project_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/homepage_project_listing.html', takes_context=True)
 def homepage_project_listing(context, count=3):
-    work = play_filter(ProjectPage.objects.filter(live=True),
+    project = play_filter(ProjectPage.objects.filter(live=True),
                        count)
     return {
         'project': project,
@@ -107,7 +107,7 @@ def homepage_project_listing(context, count=3):
 
 
 # Jobs feed for home page (might be needed in future)
-@register.inclusion_tag('khanatek/tags/homepage_job_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/homepage_job_listing.html', takes_context=True)
 def homepage_job_listing(context, count=3, intro_text=None):
     # Assume there is only one job index page
     jobindex = JobIndexPage.objects.filter(live=True).first()
@@ -127,7 +127,7 @@ def homepage_job_listing(context, count=3, intro_text=None):
     }
 
 # article posts by team member
-@register.inclusion_tag('khanatek/tags/person_article_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/person_article_listing.html', takes_context=True)
 def person_article_post_listing(context, calling_page=None):
     posts = play_filter(ArticlePage.objects.filter(related_author__author=calling_page.id).live().order_by('-date'))
     return {
@@ -138,7 +138,7 @@ def person_article_post_listing(context, calling_page=None):
     }
 
 
-@register.inclusion_tag('khanatek/tags/project_and_article_listing.html', takes_context=True)
+@register.inclusion_tag('core/tags/project_and_article_listing.html', takes_context=True)
 def project_and_article_listing(context, count=10, marketing=False):
     """
     An interleaved list of work and blog items.

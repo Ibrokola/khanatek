@@ -745,7 +745,7 @@ class ArticleIndexPage(Page):
             article_posts = paginator.page(paginator.num_pages)
 
         if request.is_ajax():
-            return render(request, "khanatek/includes/article_listing.html", {
+            return render(request, "core/includes/article_listing.html", {
                 'self': self,
                 'article_posts': article_posts,
                 'per_page': per_page,
@@ -938,7 +938,7 @@ class JobIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(
-            CareerIndexPage, self
+            JobIndexPage, self
         ).get_context(request, *args, **kwargs)
         context['jobs'] = self.job.all()
         context['articles'] = ArticlePage.objects.live().order_by('-date')[:4]
@@ -1223,9 +1223,9 @@ class PersonIndexPage(Page):
 class SignUpFormPageBullet(Orderable):
     page = ParentalKey('core.SignUpFormPage', related_name='bullet_points')
     icon = models.CharField(max_length=100, choices=(
-        ('khanatek/includes/svg/bulb-svg.html', 'Light bulb'),
-        ('khanatek/includes/svg/pro-svg.html', 'Chart'),
-        ('khanatek/includes/svg/tick-svg.html', 'Tick'),
+        ('core/includes/svg/bulb-svg.html', 'Light bulb'),
+        ('core/includes/svg/pro-svg.html', 'Chart'),
+        ('core/includes/svg/tick-svg.html', 'Tick'),
     ))
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -1291,7 +1291,7 @@ class SignUpFormPage(Page):
     formatted_title = models.CharField(
         max_length=255, blank=True,
         help_text="This is the title displayed on the page, not the document "
-        "title tag. HTML is permitted. Be careful."
+        "title tag. HTML is permitted (Remember Ibraheem)."
     )
     intro = RichTextField()
     call_to_action_text = models.CharField(
@@ -1360,7 +1360,7 @@ class SignUpFormPage(Page):
                 self.send_email_response(form.cleaned_data['email'])
                 return render(
                     request,
-                    'khanatek/includes/sign_up_form_page_landing.html',
+                    'core/includes/sign_up_form_page_landing.html',
                     {
                         'page': self,
                         'form': form,
@@ -1370,7 +1370,7 @@ class SignUpFormPage(Page):
             else:
                 return render(
                     request,
-                    'khanatek/includes/sign_up_form_page_form.html',
+                    'core/includes/sign_up_form_page_form.html',
                     {
                         'page': self,
                         'form': form,
@@ -1484,7 +1484,7 @@ class MenuItemBlock(StructBlock):
     subitems = SubMenuItemBlock()
 
     class Meta:
-        template = "khanatek/includes/menu_item.html"
+        template = "core/includes/menu_item.html"
 
 
 class MenuBlock(StreamBlock):

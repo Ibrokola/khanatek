@@ -4,7 +4,7 @@ from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATES[0]['OPTIONS']['debug'] = True
+# TEMPLATES[0]['OPTIONS']['debug'] = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
