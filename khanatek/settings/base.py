@@ -1,9 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 
-from decouple import config
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from decouple import config
+from dj_database_url import parse as dburl 
+
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -12,9 +14,8 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-DEBUG = config('DEBUG', default=False, cast=bool)
-
 SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Application definition
 
