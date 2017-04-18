@@ -251,8 +251,6 @@ class HomePageClient(Orderable, RelatedLink):
 
 
 class HomePage(Page):
-    hero_intro_primary = models.TextField(blank=True)
-    hero_intro_secondary = models.TextField(blank=True)
     intro_body = RichTextField(blank=True)
     article_title = models.TextField(blank=True)
     project_title = models.TextField(blank=True)
@@ -267,13 +265,6 @@ class HomePage(Page):
 # HomePage.content_panels
     content_panels = [
         FieldPanel('title', classname="full title"),
-        MultiFieldPanel(
-            [
-                FieldPanel('hero_intro_primary'),
-                FieldPanel('hero_intro_secondary'),
-            ],
-            heading="Hero intro"
-        ),
         InlinePanel('hero', label="Hero"),
         FieldPanel('intro_body'),
         FieldPanel('article_title'),
