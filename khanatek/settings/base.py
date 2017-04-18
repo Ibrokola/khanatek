@@ -102,13 +102,20 @@ WSGI_APPLICATION = 'khanatek.wsgi.application'
 #     'default':config('DATABASE_URL', default=default_dburl, cast=dburl),
 # }
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'khanatek',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'khanatek',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
