@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from decouple import config
+# from decouple import config
 # from dj_database_url import parse as dburl 
 
 
@@ -14,7 +14,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = config('DEBUG', default=False, cast=bool)
+
+DEBUG=True
 
 # Application definition
 
@@ -102,20 +104,20 @@ WSGI_APPLICATION = 'khanatek.wsgi.application'
 #     'default':config('DATABASE_URL', default=default_dburl, cast=dburl),
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'khanatek',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'khanatek',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

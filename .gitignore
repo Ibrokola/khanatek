@@ -1,8 +1,1 @@
-*.pyc
-.DS_Store
-*.swp
-/venv/
-/env/
-/static/
-/media/
-.env
+
