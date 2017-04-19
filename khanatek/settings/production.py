@@ -104,13 +104,6 @@ WSGI_APPLICATION = 'khanatek.wsgi.application'
 #     'default':config('DATABASE_URL', default=default_dburl, cast=dburl),
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASE['default'].update(db_from_env)
@@ -198,9 +191,3 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',
 ]
 COMPRESS_CSS_HASHING_METHOD = 'content'
-
-
-# try:
-#     from .local import *
-# except ImportError:
-#     pass
