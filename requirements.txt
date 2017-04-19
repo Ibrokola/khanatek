@@ -10,6 +10,7 @@ django-compressor==2.1.1
 django-debug-toolbar==1.7
 django-modelcluster==3.0.1
 django-redis==4.7.0
+django-redis-cache==1.7.1
 django-taggit==0.22.0
 django-toolbelt==0.0.1
 django-treebeard==4.1.0
@@ -22,6 +23,7 @@ httplib2==0.10.3
 Markdown==2.6.2
 olefile==0.44
 Pillow==4.1.0
+pkg-resources==0.0.0
 psycopg2==2.7.1
 Pygments==2.2.0
 python-decouple==3.0
@@ -37,12 +39,11 @@ static3==0.7.0
 Unidecode==0.4.20
 urllib3==1.20
 wagtail==1.9
-
+wagtail-markdown==0.4.1
 wagtailfontawesome==1.0.6
 wagtailmodeladmin==2.5.7
 webencodings==0.5.1
 whitenoise==3.3.0
 Willow==0.4
 
-# Wagtail-markdown
 git+https://github.com/torchbox/wagtail-markdown.git@mediafix#egg=wagtail-markdown

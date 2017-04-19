@@ -168,15 +168,16 @@ WAGTAILSEARCH_BACKENDS = {
     },
 }
 
-
+import urlparse
+redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': '127.0.0.1:6379',
-        'KEY_PREFIX': 'khanatek',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
+         "OPTIONS": {
+             "PASSWORD": redis_url.password,
+             "DB": 0,
+         }
     }
 }
 
