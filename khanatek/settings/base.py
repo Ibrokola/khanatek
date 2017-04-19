@@ -168,7 +168,7 @@ WAGTAILSEARCH_BACKENDS = {
     },
 }
 
-import urlparse
+import urllib.parse
 redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
 CACHES = {
     'default': {
