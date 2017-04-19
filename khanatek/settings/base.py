@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from dj_database_url import parse as dburl
+# from dj_database_url import parse as dburl
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -92,16 +92,20 @@ WSGI_APPLICATION = 'khanatek.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+# default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-DATABASES = { 'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+# DATABASES = { 'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # DATABASES = {
