@@ -7,6 +7,7 @@ from .base import *
 from decouple import config
 
 
+
 # DEBUG = False
 # TEMPLATES[0]['OPTIONS']['debug'] = False
 
@@ -14,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Allow all host headers
-ALLOWED_HOSTS = ['khanatek.herokuapp']
+ALLOWED_HOSTS = ['khanatek.herokuapp.com']
 
 
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
