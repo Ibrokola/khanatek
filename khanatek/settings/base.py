@@ -169,7 +169,7 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 import urllib.parse
-redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
+redis_url = urllib.parse.urllibparse(os.environ.get('REDIS_URL'))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
