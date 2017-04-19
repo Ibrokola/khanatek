@@ -168,18 +168,18 @@ WAGTAILSEARCH_BACKENDS = {
     },
 }
 
-import urllib.parse
-redis_url = urllib.parse.urllibparse(os.environ.get('REDIS_URL'))
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
-         "OPTIONS": {
-             "PASSWORD": redis_url.password,
-             "DB": 0,
-         }
-    }
-}
+# import urllib.parse
+# redis_url = urllib.parse.urllib.parse(os.environ.get('REDIS_URL'))
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
+#          "OPTIONS": {
+#              "PASSWORD": redis_url.password,
+#              "DB": 0,
+#          }
+#     }
+# }
 
 # Serve /public directory with whitenoise
 # WHITENOISE_ROOT = os.path.join(BASE_DIR, 'public')
