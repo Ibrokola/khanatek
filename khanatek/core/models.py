@@ -797,13 +797,13 @@ class ArticlePageAuthor(Orderable):
     ]
 
 class ArticlePage(Page):
-    main_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+    # main_image = models.ForeignKey(
+    #     'wagtailimages.Image',
+    #     null=True,
+    #     blank=True,
+    #     on_delete=models.SET_NULL,
+    #     related_name='+'
+    # )
     intro = RichTextField("Intro", blank=True)
     body = StreamField(StoryBlock())
     colour = models.CharField(
