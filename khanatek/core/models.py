@@ -853,7 +853,8 @@ class ArticlePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
-        ImageChooserPanel('main_image'),
+        # ImageChooserPanel('main_image'),
+        ImageChooserPanel('feed_image'),
         FieldPanel('colour'),
         InlinePanel('related_author', label="Author"),
         FieldPanel('date'),
@@ -865,7 +866,6 @@ class ArticlePage(Page):
 
     promote_panels = [
         MultiFieldPanel(Page.promote_panels, "Common page configuration"),
-        ImageChooserPanel('feed_image'),
         FieldPanel('canonical_url'),
         FieldPanel('marketing_only'),
     ]
