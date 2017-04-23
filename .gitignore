@@ -3,4 +3,4 @@
 /venv/
 /static/
 /media/
-.env
+.envdb.sqlite3
