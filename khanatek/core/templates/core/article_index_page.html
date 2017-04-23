@@ -5,11 +5,12 @@
 
     {% get_popular_tags self as poptags %}
 
-    <div class="container">
+<div class="container">
+    <div class="container begin">
         <h1>{{ self.intro }}</h1>
     </div>
 
-    <section class="article">
+    <section class="blog">
         <div class="container">
             <div class="popular-tags">
                 {% if poptags %}
@@ -35,10 +36,10 @@
                 {% endif %}
             </div>
         </div>
-
-        <div class="container">
-            {% include "core/includes/article_listing.html" %}
-        </div>
-
     </section>
+    <section class="section extra-margins text-center">
+        {% include "core/includes/article_listing.html" %}
+    </section>
+</div>
+
 {% endblock %}

@@ -6,17 +6,17 @@
 
     <style>
     {% for heroItem in hero %}
-    {% if heroItem.colour %}
-    .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %} .link {
-        color: {{ heroItem.colour }};
-    }
-    .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %} .link:after {
-        background-color: {{ heroItem.colour }};
-    }
-    .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %}:before {
-        background: radial-gradient(ellipse at center, {{ heroItem.colour }}  0%, rgba(35,176,176,0) 58%, rgba(35,176,176,0) 69%);
-    }
-    {% endif %}
+        {% if heroItem.colour %}
+        .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %} .link {
+            color: {{ heroItem.colour }};
+        }
+        .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %} .link:after {
+            background-color: {{ heroItem.colour }};
+        }
+        .featured-case-studies .featured-case-study{% cycle '-one' '-two' '-three' %}:before {
+            background: radial-gradient(ellipse at center, {{ heroItem.colour }}  0%, rgba(35,176,176,0) 58%, rgba(35,176,176,0) 69%);
+        }
+        {% endif %}
     {% endfor %}
     </style>
 
@@ -25,7 +25,7 @@
     <div class="feature-images view hm-black-strong">
         <div class="full-bg-img">
             {% for heroItem in hero %}
-                {% image heroItem.background fill-1800x978 as imgbanner %}
+                {% image heroItem.background max-1200x900 as imgbanner %}
                 <div class="feature-image" data-name="{% cycle '1' '2' '3' %}" style="background-image: url({{ imgbanner.url }})"></div>
             {% endfor %}
         </div>

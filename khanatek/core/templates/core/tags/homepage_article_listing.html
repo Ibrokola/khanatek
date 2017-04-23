@@ -1,7 +1,7 @@
 {% if article_posts %}
-    <ul class="blog-list">
+    <div class="row">
         {% for post in article_posts %}
            {% include "core/tags/article_list_item.html" with post=post %}
         {% endfor %}
-    </ul>
+    </div>
 {% endif %}

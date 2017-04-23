@@ -1,11 +1,13 @@
-{% load wagtailcore_tags wagtailimages_tags staticfiles %}
+{% load wagtailcore_tags wagtailimages_tags static %}
 
 {# orange arrow navigation #}
-<ul class="blogpage-listing">
+<div class="row">
 {% for post in article_posts %}
     {% include 'core/tags/article_list_item.html' %}
+{% empty %}
+    No posts found
 {% endfor %}
-</ul>
+</div>
 
 <div class="container pagination">
     {# Pagination #}
@@ -18,7 +20,7 @@
 
     <div class="next">
         {% if article_posts.has_next %}
-            <a href="?page={{ blog_posts.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Next </p></a>
+            <a href="?page={{ article_posts.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Next </p></a>
         {% endif %}
     </div>
 </div>

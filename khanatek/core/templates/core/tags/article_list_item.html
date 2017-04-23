@@ -1,30 +1,17 @@
 {% load wagtailcore_tags wagtailimages_tags khanatek_tags static %}
 
-<li {% if post.colour %}class="{{ post.colour }}"{% endif %}>
-    <div class="row">
-    <!--First column-->
-        <div class="col-md-4 mb-r wow fadeInUp" data-wow-delay="0.6s">
-            <!--Featured image-->
-                <div class="view overlay hm-white-slight mb-3">
-                {% image post.feed_image fill-357.3x238.2 as background %}
-                    <a>
+<div class="col-md-4 mb-r wow fadeInUp" data-wow-delay="0.2s">
+            <div class="view overlay hm-white-slight mb-3">
+                {% image post.feed_image fill-398x266 as background %}
+                <img src="{{ background.url }}" >
+                    <a href="{% pageurl post %}">
                         <div class="mask"></div>
                     </a>
-                </div>
-
-            <!--Excerpt-->
-            <h5 class="blue-text"><i class="fa fa-hat "></i>Engineering</h5> 
-
-            <!-- Figure out how to add this dynamically -->
-            <h4>{{ post.title }}</h4>
-            {% for author in post.related_author.all %}<p>by <a class="name"><strong>{{ author.author.title }}{% if not forloop.last %},&nbsp;{% endif %}</strong></a>{% endfor %}, {% if post.date %} <span class="date">{{ post.date|date:"j F Y" }}</span>{% endif %}</p>
-
-            <p class="post-intro">
-                {{ post.intro|richtext|truncatewords_html:10 }}
-            </p>
-            <a class="btn btn-primary" href="{% pageurl post %}">Read more</a>
-        </div>
-
-        <hr class="p-col">
-    </div>
-</li>
+            </div>
+            <label class="blue-text">Article</label>
+                        <h3>{{ post.title }}</h3>
+                        {% for author in post.related_author.all %}
+                        <p>by <a><strong>{{ author.author.title }}{% if not forloop.last %},&nbsp;{% endif %}</strong></a>{% endfor %}, {% if post.date %}{{ post.date|date:"j F Y" }}{% endif %}</p>
+                        <p>{{ post.body|truncatewords:28 }}</p>
+                        <a class="btn btn-primary " href="{% pageurl post %}">Read more</a>
+</div>

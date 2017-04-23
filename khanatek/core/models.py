@@ -349,13 +349,13 @@ class StandardPage(Page):
     content_panels = [
         FieldPanel('title', classname="full title"),
         ImageChooserPanel('main_image'),
+        ImageChooserPanel('feed_image'),
         FieldPanel('credit', classname="full"),
         FieldPanel('heading', classname="full"),
         FieldPanel('quote', classname="full"),
         StreamFieldPanel('intro'),
         FieldPanel('middle_break', classname="full"),
         StreamFieldPanel('body'),
-        # StreamFieldPanel('streamfield'),
         FieldPanel('email', classname="full"),
         InlinePanel('content_block', label="Content block"),
         InlinePanel('related_links', label="Related links"),
@@ -365,7 +365,6 @@ class StandardPage(Page):
     promote_panels = [
         MultiFieldPanel(Page.promote_panels, "Common page configuration"),
         FieldPanel('show_in_play_menu'),
-        ImageChooserPanel('feed_image'),
     ]
 
     			##################
@@ -473,7 +472,9 @@ class ServicesPage(Page):
     intro = models.TextField(blank=True)
 
     search_fields = Page.search_fields + [
+        index.SearchField('title'),
         index.SearchField('intro'),
+        index.SearchField('heading'),
     ]
 
     content_panels = [
@@ -725,9 +726,9 @@ class ArticleIndexPage(Page):
             article_posts = article_posts.filter(tags__tag__slug=tag)
 
         # Pagination
-        per_page = 10
+        per_page = 9
         page = request.GET.get('page')
-        paginator = Paginator(article_posts, per_page)  # Show 10 article_posts per page
+        paginator = Paginator(article_posts, per_page)  # Show 9 article_posts per page
         try:
             article_posts = paginator.page(page)
         except PageNotAnInteger:
@@ -797,13 +798,13 @@ class ArticlePageAuthor(Orderable):
     ]
 
 class ArticlePage(Page):
-    # main_image = models.ForeignKey(
-    #     'wagtailimages.Image',
-    #     null=True,
-    #     blank=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name='+'
-    # )
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     intro = RichTextField("Intro", blank=True)
     body = StreamField(StoryBlock())
     colour = models.CharField(
@@ -825,7 +826,7 @@ class ArticlePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    marketing_only = models.BooleanField(default=False, help_text='Display this blog post only on marketing landing page')
+    marketing_only = models.BooleanField(default=False, help_text='Display this article post only on marketing landing page')
 
     canonical_url = models.URLField(blank=True, max_length=255)
 
@@ -836,7 +837,7 @@ class ArticlePage(Page):
 
     @property
     def article_index(self):
-        # Find blog index in ancestors
+        # Find article index in ancestors
         for ancestor in reversed(self.get_ancestors()):
             if isinstance(ancestor.specific, ArticleIndexPage):
                 return ancestor
@@ -853,7 +854,7 @@ class ArticlePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
-        # ImageChooserPanel('main_image'),
+        ImageChooserPanel('main_image'),
         ImageChooserPanel('feed_image'),
         FieldPanel('colour'),
         InlinePanel('related_author', label="Author"),
