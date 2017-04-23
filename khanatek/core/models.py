@@ -817,7 +817,7 @@ class ArticlePage(Page):
         max_length=255,
         blank=True
     )
-    # streamfield = StreamField(StoryBlock())
+    streamfield = StreamField(StoryBlock(), blank=True)
     date = models.DateField("Post date")
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -861,6 +861,7 @@ class ArticlePage(Page):
         FieldPanel('date'),
         FieldPanel('intro', classname="full"),
         StreamFieldPanel('body'),
+        StreamFieldPanel('streamfield'),
         InlinePanel('related_links', label="Related links"),
         InlinePanel('tags', label="Tags")
     ]
