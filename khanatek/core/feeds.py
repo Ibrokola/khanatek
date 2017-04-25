@@ -4,11 +4,11 @@ import imghdr
 from django.conf import settings
 from django.contrib.syndication.views import Feed
 
-from tbx.core.models import BlogPage
-from tbx.core.utils import play_filter
+from khanatek.core.models import ArticlePage
+from khanatek.core.utils import play_filter
 
 
-# Main blog feed
+# Main artcile feed
 
 class ArticleFeed(Feed):
     title = "The Khanatek Article"
@@ -16,7 +16,7 @@ class ArticleFeed(Feed):
     description = "The latest news and views from Khanatek on the work we do"
 
     def items(self):
-        return play_filter(ArticlePage.objects.live().order_by('-date'), 10)
+        return play_filter(ArticlePage.objects.live().order_by('-date'), 6)
 
     def item_title(self, item):
         return item.title

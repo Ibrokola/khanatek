@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.shortcuts import render
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.views.decorators.vary import vary_on_headers
 
@@ -17,6 +18,7 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
                                                 PageChooserPanel,
                                                 StreamFieldPanel)
 from wagtail.wagtailadmin.utils import send_mail
+
 from wagtail.wagtailcore.blocks import (CharBlock, FieldBlock, ListBlock,
                                         PageChooserBlock, RawHTMLBlock,
                                         RichTextBlock, StreamBlock,
@@ -24,6 +26,7 @@ from wagtail.wagtailcore.blocks import (CharBlock, FieldBlock, ListBlock,
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailforms.models import AbstractEmailForm, AbstractFormField
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -34,7 +37,6 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtailmarkdown.fields import MarkdownBlock
 from .fields import ColorField
-
 
 
 
@@ -325,9 +327,22 @@ class StandardPage(Page):
     credit = models.CharField(max_length=255, blank=True)
     heading = RichTextField(blank=True)
     quote = models.CharField(max_length=255, blank=True)
-    intro = StreamField(StoryBlock())
+    intro = RichTextField(blank=True)
     middle_break = RichTextField(blank=True)
-    body = StreamField(StoryBlock())
+    body = StreamField([
+        ('h2', CharBlock(icon="title", classname="title")),
+        ('h3', CharBlock(icon="title", classname="title")),
+        ('h4', CharBlock(icon="title", classname="title")),
+        ('intro', RichTextBlock(icon="pilcrow")),
+        ('paragraph', RichTextBlock(icon="pilcrow")),
+        ('aligned_image', ImageBlock(label="Aligned image")),
+        ('wide_image', WideImage(label="Wide image")),
+        ('bustout', BustoutBlock()),
+        ('pullquote', PullQuoteBlock()),
+        ('raw_html', RawHTMLBlock(label='Raw HTML', icon="code")),
+        ('embed', EmbedBlock(icon="code")),
+        ('markdown', MarkdownBlock(icon="code")),
+    ])
     # streamfield = StreamField(StoryBlock())
     email = models.EmailField(blank=True)
 
@@ -346,14 +361,14 @@ class StandardPage(Page):
         index.SearchField('body'),
     ]
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('title', classname="full title"),
         ImageChooserPanel('main_image'),
         ImageChooserPanel('feed_image'),
         FieldPanel('credit', classname="full"),
         FieldPanel('heading', classname="full"),
         FieldPanel('quote', classname="full"),
-        StreamFieldPanel('intro'),
+        FieldPanel('intro'),
         FieldPanel('middle_break', classname="full"),
         StreamFieldPanel('body'),
         FieldPanel('email', classname="full"),
@@ -496,7 +511,7 @@ class CaseStudyBlock(StructBlock):
     title = CharBlock(required=True)
     intro = TextBlock(required=True)
     case_studies = ListBlock(StructBlock([
-        ('page', PageChooserBlock('torchbox.WorkPage')),
+        ('page', PageChooserBlock('core.ProjectPage')),
         ('title', CharBlock(required=False)),
         ('descriptive_title', CharBlock(required=False)),
         ('image', ImageChooserBlock(required=False)),
@@ -766,11 +781,12 @@ class ArticlePageRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('core.ArticlePage', related_name='related_links')
 
 
+@python_2_unicode_compatible
 class ArticlePageTagList(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 register_snippet(ArticlePageTagList)
@@ -1004,7 +1020,19 @@ class ProjectPage(Page):
     summary = models.CharField(max_length=255)
     descriptive_title = models.CharField(max_length=255)
     intro = RichTextField("Intro", blank=True)
-    body = StreamField(StoryBlock())
+    body = StreamField([
+        ('h2', CharBlock(icon="title", classname="title")),
+        ('h3', CharBlock(icon="title", classname="title")),
+        ('h4', CharBlock(icon="title", classname="title")),
+        ('intro', RichTextBlock(icon="pilcrow")),
+        ('paragraph', RichTextBlock(icon="pilcrow")),
+        ('aligned_image', ImageBlock(label="Aligned image")),
+        ('wide_image', WideImage(label="Wide image")),
+        ('bustout', BustoutBlock()),
+        ('pullquote', PullQuoteBlock()),
+        ('embed', EmbedBlock(icon="code")),
+        ('markdown', MarkdownBlock(icon="code")),
+    ])
     homepage_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1083,7 +1111,7 @@ class ProjectIndexPage(Page):
         return projects
 
     def serve(self, request):
-        # Get work pages
+        # Get project pages
         projects = self.projects
 
         # Filter by tag
