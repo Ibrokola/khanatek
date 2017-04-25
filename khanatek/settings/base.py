@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wagtail.contrib.settings',
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.wagtailstyleguide',
 ]
 
 MIDDLEWARE = [
