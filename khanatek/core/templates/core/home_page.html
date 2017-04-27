@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
 {% load khanatek_tags wagtailcore_tags wagtailimages_tags wagtailembeds_tags static %}
-{% block title_postfix %}{% endblock %}
+{% block title_postfix %} | Khanatek Technologies {% endblock %}
 {% block content %}
 
 
@@ -19,6 +19,7 @@
 
     <section class="section extra-margins text-center">
         <h2 class="section-heading wow fadeInDown" data-wow-delay="0.4s">{{ self.article_title|safe }}</h2>
+        
         		{% homepage_article_listing %}
 
     </section>
@@ -35,7 +36,7 @@
     <hr class="between-sections">
 
     <div class="container">
-        <section class="clients">
+        <section class="section extra-margins text-center">
             <h2 class="section-heading wow fadeIn" data-wow-delay="0.8s">{{ self.clients_title|safe }}</h2>
             	{% include "core/includes/clients.html" with clients=self.clients.all %}
         </section>
@@ -43,7 +44,7 @@
 
     <hr class="between-sections">
 
-    <section class="hiring">
+    <section class="section extra-margins text-center">
         <div class="container">
             {% homepage_job_listing 0 %}
         </div>

@@ -822,18 +822,31 @@ class ArticlePage(Page):
         related_name='+'
     )
     intro = RichTextField("Intro", blank=True)
-    body = StreamField(StoryBlock())
-    colour = models.CharField(
-        "Listing card colour if left blank will display image",
-        choices=(
-            ('orange', "Orange"),
-            ('blue', "Blue"),
-            ('white', "White")
-        ),
-        max_length=255,
-        blank=True
-    )
-    streamfield = StreamField(StoryBlock(), blank=True)
+    body = StreamField(
+                [('h2', CharBlock(icon="title", classname="title")),
+                ('h3', CharBlock(icon="title", classname="title")),
+                ('h4', CharBlock(icon="title", classname="title")),
+                ('intro', RichTextBlock(icon="pilcrow")),
+                ('paragraph', RichTextBlock(icon="pilcrow")),
+                ('aligned_image', ImageBlock(label="Aligned image")),
+                ('wide_image', WideImage(label="Wide image")),
+                ('bustout', BustoutBlock()),
+                ('pullquote', PullQuoteBlock()),
+                ('raw_html', RawHTMLBlock(label='Raw HTML', icon="code")),
+                ('embed', EmbedBlock(icon="code")),
+                ('markdown', MarkdownBlock(icon="code")),
+            ])
+    # colour = models.CharField(
+    #     "Listing card colour if left blank will display image",
+    #     choices=(
+    #         ('orange', "Orange"),
+    #         ('blue', "Blue"),
+    #         ('white', "White")
+    #     ),
+    #     max_length=255,
+    #     blank=True
+    # )
+    # streamfield = StreamField(StoryBlock(), blank=True)
     date = models.DateField("Post date")
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -872,12 +885,12 @@ class ArticlePage(Page):
         FieldPanel('title', classname="full title"),
         ImageChooserPanel('main_image'),
         ImageChooserPanel('feed_image'),
-        FieldPanel('colour'),
+        # FieldPanel('colour'),
         InlinePanel('related_author', label="Author"),
         FieldPanel('date'),
         FieldPanel('intro', classname="full"),
         StreamFieldPanel('body'),
-        StreamFieldPanel('streamfield'),
+        # StreamFieldPanel('streamfield'),
         InlinePanel('related_links', label="Related links"),
         InlinePanel('tags', label="Tags")
     ]
@@ -950,7 +963,7 @@ class JobIndexPage(Page):
             JobIndexPage, self
         ).get_context(request, *args, **kwargs)
         context['jobs'] = self.job.all()
-        context['articles'] = ArticlePage.objects.live().order_by('-date')[:4]
+        context['articles'] = ArticlePage.objects.live().order_by('-date')[:6]
         return context
 
     content_panels = [

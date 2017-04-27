@@ -1,39 +1,4 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-<div class="col-md-6 mb-r wow zoomIn" data-wow-delay="0.4s">
-    <a href="{% pageurl page %}">
-        <div class="content">
-            {% if image %}
-                {% image image fill-500x500 as background %}
-                <div class="image-container" style="background-image: url('{{ background.url }}');"></div>
-            {% endif %}
-
-            <div class="work-text">
-                <label>Work</label>
-                <h3>{{ descriptive_title }}</h3>
-                <h4>{{ title }}</h4>
-            </div>
-        </div>
-    </a>
-</div>
-
- <!-- <div class="col-md-6 mb-r wow zoomIn" data-wow-delay="0.4s"> -->
-                        <!--Card-->
-<!--                         <div class="view hm-zoom" style="background-image: url('https://mdbootstrap.com/images/regular/dark/img%20(8).jpg')">
- -->
-                            <!--Content-->
-<!--                             <div class="white-text text-center">
-                                <div class="card-block">
-                                    <h5 class="cyan-text"><i class="fa fa-desktop"></i> Software</h5>
-                                    <h3>Project title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem, optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!.</p>
-                                    <a class="btn btn-lg btn-outline-white"><i class="fa fa-clone left"></i> View project</a>
-                                </div> -->
-                            <!-- </div> -->
-
-                        <!-- </div> -->
-                        <!--/.Card-->
-                    <!-- </div> -->
-                    <!--/Third column-->
 
 <div class="col-md-6 mb-r wow zoomIn" data-wow-delay="0.4s">
 
@@ -42,7 +7,7 @@
         <!--Card image-->
         <div class="view  hm-zoom">
             {% if image %}
-                {% image image fill-500x500 as background %}
+                {% image image fill-540x540 as background %}
             <img src="{{ background.url }}" class="img-fluid" alt="">
             {% endif %}
 

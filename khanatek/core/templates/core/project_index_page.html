@@ -42,13 +42,13 @@
 
     <div class="work">
         <section class="container">
-            {% if works %}
+            {% if project %}
                 <ul class="work-list">
-                    {% for work in works %}
-                        {% with work.screenshots.all|first as screenshot %}
+                    {% for project in projects %}
+                        {% with project.screenshots.all|first as screenshot %}
                         {% image screenshot.image width-2000 as screenshotimage %}
                         <li>
-                            <a href="{% pageurl work %}">
+                            <a href="{% pageurl project %}">
                                 <div class="content">
                                     {% image screenshot.image width-1000 as background %}
                                     <div class="image-container" style="background-image: url('{{ background.url }}');">
@@ -59,8 +59,8 @@
                                         <h5>{{ screenshot.image.credit_text }}</h5>
                                     </div>
                                     <div class="work-text">
-                                        <h3>{{ work.descriptive_title }}</h3>
-                                        <h4>{{ work.title }}</h4>
+                                        <h3>{{ project.descriptive_title }}</h3>
+                                        <h4>{{ project.title }}</h4>
                                     </div>
                                 </div>
                             </a>
@@ -77,8 +77,8 @@
 
         {# Append any other url query string variables to the next and previous links - allows tag to be passed through #}
         <div class="previous">
-            {% if works.has_previous %}
-                <a href="?page={{ works.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Previous &nbsp;</p></a>
+            {% if projects.has_previous %}
+                <a href="?page={{ projects.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Previous &nbsp;</p></a>
             {% endif %}
         </div>
 
@@ -89,10 +89,9 @@
         -->
 
         <div class="next">
-            {% if works.has_next %}
-                <a href="?page={{ works.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Next </p></a>
+            {% if projects.has_next %}
+                <a href="?page={{ projects.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><p> Next </p></a>
             {% endif %}
         </div>
     </div>
 {% endblock %}
-

@@ -23,15 +23,9 @@
                                 <a><strong>{{ author.author.title }}{% if not forloop.last %},&nbsp;{% endif %}</strong></a>{% endfor %}, {% if self.date %}{{ self.date|date:"j F Y" }}{% endif %}</p>
                                 </div>
                                         <div class="post-text">
-                                           {% if not self.streamfield and self.intro %}
-                                                {{ self.intro|richtext }}
-                                            {% endif %}
 
-                                            {% for block in page.body %}
-                                                {% include_block block %}
-                                            {% endfor %}
-
-                                            {% include "core/includes/streamfield.html" %}
+                                            {% include "core/includes/stream.html" %}
+                                            
                                         </div>
                                         <!--/Post text-->
                                         <hr>
