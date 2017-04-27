@@ -10,6 +10,10 @@ header,
 .navbar {
     background-color: transparent;
 }
+
+.navbar-dark .navbar-nav .nav-link{
+    color: #000000;
+}
         
 .top-nav-collapse {
     background-color: #154771;
@@ -320,7 +324,7 @@ footer.page-footer {
     .bleed li {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
-        opacity: 1;
+        opacity: 10;
         text-align: left;
         float: right;
         margin-right: 20px;
