@@ -9,8 +9,8 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ibrokolawole@gmail.com'
-EMAIL_HOST_PASSWORD = 'selfmade1'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "Ibro <babskolawole@gmail.com>"
